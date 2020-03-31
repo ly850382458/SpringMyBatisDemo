@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 加载db.properties文件 -->
+	<bean  id="config" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		<property name="locations">
+			<array>
+				<value>classpath:db.properties</value>
+			</array>		
+		</property>
+	</bean>
+	<!-- 配置配置数据库信息（替代mybatis的配置文件conf.xml） -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+			<property name="driverClassName" value="${driver}"></property>
+			<property name="url" value="${url}"></property>
+			<property name="username" value="${username}"></property>
+			<property name="password" value="${password}"></property>
+	</bean>
+	
+		<!-- 在SpringIoc容器中 创建MyBatis的核心类 SqlSesionFactory -->
+	<bean id="sqlSessionFacotry" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="org/com/cancer/mapper/*.xml"></property>	
+	</bean>
+	
+
+	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	 	<property name="sqlSessionFactoryBeanName" value="sqlSessionFacotry"></property>
+	 	<property name="basePackage" value="org.com.cancer.mapper"></property>
+	 </bean>
+
+	 
+	
+	<bean id="studentService" class="org.com.cancer.service.impl.StudentServiceImpl">
+		<property name="studentMapper" ref="studentMapper"></property>
+	</bean>
+	
+	
+	
+
+
+</beans>

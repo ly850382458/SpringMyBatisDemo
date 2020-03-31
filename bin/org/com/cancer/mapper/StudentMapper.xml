@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.com.cancer.mapper.StudentMapper">
+
+	<insert id="addStudent" parameterType="org.com.cancer.entity.Student">
+		insert into student(stuNo,stuName,stuAge) values(#{stuNo},#{stuName},#{stuAge})
+	</insert>
+
+</mapper>
